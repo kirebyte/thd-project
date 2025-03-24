@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Car Service API
+  description: Basic microservice for managing car information.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /cars:
+    get:
+      summary: List all cars
+      responses:
+        '200':
+          description: A list of cars
+    post:
+      summary: Create a new car
+      requestBody:
+        description: Car to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '201':
+          description: Created
+  /cars/{id}:
+    get:
+      summary: Get a car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Car found
+    put:
+      summary: Update a car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Car to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Updated
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          type: string
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer

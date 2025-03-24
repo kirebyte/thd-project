@@ -21,3 +21,7 @@ fmt:
 swagger:
 	# TODO: Generate docs into docs/openapi.yaml
 	@echo "Swagger generation not yet implemented 🚧"
+
+.PHONY: swagger-validate
+swagger-validate:
+	go run github.com/getkin/kin-openapi/cmd/validate@latest docs/openapi.yaml
