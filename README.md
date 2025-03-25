@@ -145,7 +145,3 @@ There's a document named "ARCHITECTURE_FAQ.md" in the docs directory that explai
 
 Thanks for reviewing my project! 💜
 
----
-
-MIT License — Kirebyte 2024
-
