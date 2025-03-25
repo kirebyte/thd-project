@@ -32,5 +32,8 @@ jobs:
       - name: 🖥️ Initialize DB
         run: make db-init
 
+      - name: 🖥️ Start Server
+        run: make run
+
       - name: 📦 Integration Tests
         run: make integration
