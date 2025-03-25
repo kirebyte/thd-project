@@ -59,36 +59,33 @@ func (h *CarHandler) ListCars(w http.ResponseWriter, r *http.Request) {
 
 // POST /cars
 func (h *CarHandler) CreateCar(w http.ResponseWriter, r *http.Request) {
+	// Decode the request body into a car.
 	var car model.Car
 	if err := json.NewDecoder(r.Body).Decode(&car); err != nil {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.svc.Create(r.Context(), car); err != nil {
+	// Create the car.
+	addedCar, err := h.svc.Create(r.Context(), car)
+	if err != nil {
 		logger.Warn("CreateCar failed: " + err.Error())
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	writeJSON(w, http.StatusCreated, car)
+	writeJSON(w, http.StatusCreated, addedCar)
 }
 
 // PUT /cars/{id}
 func (h *CarHandler) UpdateCar(w http.ResponseWriter, r *http.Request) {
-	id := strings.TrimPrefix(r.URL.Path, "/cars/")
-	if id == "" {
-		http.Error(w, "Missing car ID", http.StatusBadRequest)
-		return
-	}
-
 	var car model.Car
 	if err := json.NewDecoder(r.Body).Decode(&car); err != nil {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.svc.Update(r.Context(), id, car); err != nil {
+	if err := h.svc.Update(r.Context(), car); err != nil {
 		logger.Warn("UpdateCar failed: " + err.Error())
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

@@ -12,7 +12,7 @@ type Car struct {
 	db *sql.DB
 }
 
-// New creates a new CarRepository
+// New creates a new repository
 func New(db *sql.DB) *Car {
 	return &Car{db: db}
 }
@@ -65,12 +65,12 @@ func (r *Car) Save(ctx context.Context, car model.Car) error {
 }
 
 // Update updates a car
-func (r *Car) Update(ctx context.Context, id string, car model.Car) error {
+func (r *Car) Update(ctx context.Context, car model.Car) error {
 	_, err := r.db.ExecContext(ctx, `
 		UPDATE cars
 		SET make = ?, model = ?, package = ?, color = ?, year = ?, category = ?, mileage = ?, price = ?
 		WHERE id = ?`,
-		car.Make, car.Model, car.Package, car.Color, car.Year, car.Category, car.Mileage, car.Price, id)
+		car.Make, car.Model, car.Package, car.Color, car.Year, car.Category, car.Mileage, car.Price, car.ID)
 	if err != nil {
 		return fmt.Errorf("Update error: %w", err)
 	}

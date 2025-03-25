@@ -1,0 +1,183 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "THD Car Service API",
+      "description": "A simple car inventory microservice built with Go.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8080"
+      }
+    ],
+    "paths": {
+      "/cars": {
+        "get": {
+          "summary": "List all cars",
+          "responses": {
+            "200": {
+              "description": "List of cars",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Car"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new car",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Car created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      },
+      "/cars/{id}": {
+        "get": {
+          "summary": "Get car by ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Car found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Missing ID"
+            },
+            "404": {
+              "description": "Car not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update car by ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Car updated"
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Car": {
+          "type": "object",
+          "required": [
+            "id",
+            "make",
+            "model",
+            "package",
+            "color",
+            "year",
+            "category",
+            "mileage",
+            "price"
+          ],
+          "properties": {
+            "id": { "type": "string" },
+            "make": { "type": "string" },
+            "model": { "type": "string" },
+            "package": { "type": "string" },
+            "color": { "type": "string" },
+            "year": { "type": "integer", "minimum": 1900 },
+            "category": { "type": "string" },
+            "mileage": { "type": "integer", "description": "Miles" },
+            "price": { "type": "integer", "description": "Price in cents" }
+          }
+        },
+        "CarInput": {
+          "type": "object",
+          "required": [
+            "make",
+            "model",
+            "package",
+            "color",
+            "year",
+            "category",
+            "mileage",
+            "price"
+          ],
+          "properties": {
+            "make": { "type": "string" },
+            "model": { "type": "string" },
+            "package": { "type": "string" },
+            "color": { "type": "string" },
+            "year": { "type": "integer", "minimum": 1900 },
+            "category": { "type": "string" },
+            "mileage": { "type": "integer" },
+            "price": { "type": "integer" }
+          }
+        }
+      }
+    }
+  }
+  

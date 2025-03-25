@@ -17,8 +17,8 @@ import (
 type mockCarService struct {
 	GetFunc    func(ctx context.Context, id string) (model.Car, error)
 	ListFunc   func(ctx context.Context) ([]model.Car, error)
-	CreateFunc func(ctx context.Context, car model.Car) error
-	UpdateFunc func(ctx context.Context, id string, car model.Car) error
+	CreateFunc func(ctx context.Context, car model.Car) (model.Car, error)
+	UpdateFunc func(ctx context.Context, car model.Car) error
 }
 
 func (m *mockCarService) Get(ctx context.Context, id string) (model.Car, error) {
@@ -27,11 +27,11 @@ func (m *mockCarService) Get(ctx context.Context, id string) (model.Car, error) 
 func (m *mockCarService) List(ctx context.Context) ([]model.Car, error) {
 	return m.ListFunc(ctx)
 }
-func (m *mockCarService) Create(ctx context.Context, car model.Car) error {
+func (m *mockCarService) Create(ctx context.Context, car model.Car) (model.Car, error) {
 	return m.CreateFunc(ctx, car)
 }
-func (m *mockCarService) Update(ctx context.Context, id string, car model.Car) error {
-	return m.UpdateFunc(ctx, id, car)
+func (m *mockCarService) Update(ctx context.Context, car model.Car) error {
+	return m.UpdateFunc(ctx, car)
 }
 
 func TestGetCar_OK(t *testing.T) {
@@ -75,11 +75,11 @@ func TestCreateCar_BadJSON(t *testing.T) {
 
 func TestCreateCar_Valid(t *testing.T) {
 	mockSvc := &mockCarService{
-		CreateFunc: func(ctx context.Context, car model.Car) error {
+		CreateFunc: func(ctx context.Context, car model.Car) (model.Car, error) {
 			if car.Make == "" {
-				return errors.New("missing make")
+				return model.Car{}, errors.New("missing make")
 			}
-			return nil
+			return model.Car{}, nil
 		},
 	}
 	handler := handlers.NewCarHandler(mockSvc)
