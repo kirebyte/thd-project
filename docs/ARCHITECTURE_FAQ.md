@@ -119,3 +119,42 @@ Our approach:
 We aim for **clarity, context, and independence**, even if that means a bit of duplication.
 
 ---
+
+## Why are the repository and service interfaces public, but their implementations are in `internal/`?
+
+This is an intentional design decision.
+
+The interfaces in `repository/` and `service/` define **public contracts** for the rest of the app (or tests) to use.  
+They're visible and reusable without exposing implementation details.
+
+The concrete implementations (like SQLite, in-memory, or mock services) live inside `internal/` because:
+- They're private to this project
+- They're replaceable without affecting consumers
+- We don't want other packages or apps importing them directly
+
+This aligns with Go’s design philosophy:
+> "Design your code around interfaces, not implementations."
+
+---
+
+## But in Java, the interface and implementation are usually together?
+
+Yes — in Java it's common to pair them like:
+```java
+CarRepository + SqlCarRepository
+```
+
+In Go, the interface doesn’t know or care who implements it.
+What matters is that something satisfies the contract — not where it lives.
+
+By separating them, we gain:
+
+Better testability
+
+Clearer boundaries
+
+Stronger encapsulation
+
+It's also easier to enforce mocking and avoid tight coupling between layers.
+
+---

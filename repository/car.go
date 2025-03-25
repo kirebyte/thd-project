@@ -1,12 +1,12 @@
-package main
+package repository
 
 import (
 	"context"
 
-	"github.com/kirebyte/thd-project/internal/model"
+	"github.com/kirebyte/thd-project/model"
 )
 
-type CarRepository interface {
+type Car interface {
 	FindByID(ctx context.Context, id string) (model.Car, error)
 	FindAll(ctx context.Context) ([]model.Car, error)
 	Save(ctx context.Context, car model.Car) error

@@ -5,20 +5,20 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/kirebyte/thd-project/internal/model"
+	"github.com/kirebyte/thd-project/model"
 )
 
-type CarRepository struct {
+type Car struct {
 	db *sql.DB
 }
 
 // New creates a new CarRepository
-func New(db *sql.DB) *CarRepository {
-	return &CarRepository{db: db}
+func New(db *sql.DB) *Car {
+	return &Car{db: db}
 }
 
 // FindByID returns a car by its ID
-func (r *CarRepository) FindByID(ctx context.Context, id string) (model.Car, error) {
+func (r *Car) FindByID(ctx context.Context, id string) (model.Car, error) {
 	row := r.db.QueryRowContext(ctx, `
 		SELECT id, make, model, package, color, year, category, mileage, price
 		FROM cars WHERE id = ?`, id)
@@ -32,7 +32,7 @@ func (r *CarRepository) FindByID(ctx context.Context, id string) (model.Car, err
 }
 
 // FindAll returns all cars
-func (r *CarRepository) FindAll(ctx context.Context) ([]model.Car, error) {
+func (r *Car) FindAll(ctx context.Context) ([]model.Car, error) {
 	rows, err := r.db.QueryContext(ctx, `
 		SELECT id, make, model, package, color, year, category, mileage, price
 		FROM cars`)
@@ -53,7 +53,7 @@ func (r *CarRepository) FindAll(ctx context.Context) ([]model.Car, error) {
 }
 
 // Save inserts a new car
-func (r *CarRepository) Save(ctx context.Context, car model.Car) error {
+func (r *Car) Save(ctx context.Context, car model.Car) error {
 	_, err := r.db.ExecContext(ctx, `
 		INSERT INTO cars (id, make, model, package, color, year, category, mileage, price)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -65,7 +65,7 @@ func (r *CarRepository) Save(ctx context.Context, car model.Car) error {
 }
 
 // Update updates a car
-func (r *CarRepository) Update(ctx context.Context, id string, car model.Car) error {
+func (r *Car) Update(ctx context.Context, id string, car model.Car) error {
 	_, err := r.db.ExecContext(ctx, `
 		UPDATE cars
 		SET make = ?, model = ?, package = ?, color = ?, year = ?, category = ?, mileage = ?, price = ?
