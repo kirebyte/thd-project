@@ -24,6 +24,12 @@ test:
 	go test -cover $(PKG)
 	$(call feedback,Test coverage complete)
 
+.PHONY: coverage
+coverage:
+	go test -coverprofile=coverage.out $(PKG)
+	go tool cover -html=coverage.out -o docs/coverage.html
+	$(call feedback,Coverage report generated at coverage.html)
+
 .PHONY: fmt
 fmt:
 	go fmt $(PKG)
@@ -31,7 +37,7 @@ fmt:
 
 .PHONY: swagger
 swagger:
-	# TODO: Generar documentación Swagger desde docs/openapi.yaml
+	# TODO: Generate doc from docs/openapi.yaml
 	@echo "[WARN] Swagger generation not yet implemented 🚧" >&2
 
 .PHONY: swagger-validate

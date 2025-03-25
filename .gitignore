@@ -6,3 +6,5 @@ docs/code_listing.txt
 *.sqlite
 *.sqlite3-journal
 *.log
+coverage.out
+docs/coverage.html
