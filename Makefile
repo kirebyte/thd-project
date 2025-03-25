@@ -30,10 +30,15 @@ coverage:
 	go tool cover -html=coverage.out -o docs/coverage.html
 	$(call feedback,Coverage report generated at coverage.html)
 
-.PHONY: fmt
-fmt:
+.PHONY: lint
+lint:
 	go fmt $(PKG)
-	$(call feedback,Formatting applied)
+	go vet $(PKG)
+	$(call feedback,Code linted and validated)
+
+.PHONY: check
+check: lint test
+	$(call feedback,Codebase checked and validated)
 
 .PHONY: swagger
 swagger:
