@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Build, Lint and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧬 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🐹 Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: 🔧 Install Newman
+        run: npm install -g newman
+
+      - name: 🔍 Lint
+        run: make lint
+
+      - name: 🧪 Unit Tests
+        run: make test
+
+      - name: 🖥️ Initialize DB
+        run: make db-init
+
+      - name: 📦 Integration Tests
+        run: make integration

@@ -24,6 +24,13 @@ test:
 	go test -cover $(PKG)
 	$(call feedback,Test coverage complete)
 
+.PHONY: integration
+integration:
+	newman run tests/collections/thd-api.postman_collection.json \
+		--reporters cli \
+		--env-var "baseUrl=http://localhost:8080"
+	$(call feedback,Postman integration tests completed ✅)
+
 .PHONY: coverage
 coverage:
 	go test -coverprofile=coverage.out $(PKG)
