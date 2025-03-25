@@ -1,3 +1,8 @@
 .vscode
 .env
 docs/code_listing.txt
+*.db
+*.sqlite3
+*.sqlite
+*.sqlite3-journal
+*.log
