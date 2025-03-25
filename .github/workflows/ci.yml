@@ -29,11 +29,10 @@ jobs:
       - name: 🧪 Unit Tests
         run: make test
 
-      - name: 🖥️ Initialize DB
-        run: make db-init
-
-      - name: 🖥️ Start Server
-        run: make run
-
-      - name: 📦 Integration Tests
-        run: make integration
+      - name: 🧪 Run Integration Tests Against Server
+        run: |
+          make db-init
+          make build
+          .thd-project &          
+          sleep 2                 # <-- Let's wait a little bit, just in case
+          make integration
