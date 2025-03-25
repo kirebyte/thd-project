@@ -68,6 +68,6 @@ swagger-validate:
 
 .PHONY: db-init
 db-init:
-	go run cmd/dbinit/main.go
+	go run cmd/init-database/main.go
 	$(call feedback,Checked and initialized the SQLite database)
 
