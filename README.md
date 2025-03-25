@@ -6,6 +6,8 @@ This project is a fully functional Go microservice designed to manage a car inve
 
 > “We were asked to build a microservice with in-memory persistence, but we went a little further: SQLite, validation, tests, CI/CD, and swagger. We built something real. AI became a real boost for software engineering and I'm proud to show a project that was built in record time following good standards."
 
+[Watch the demo with music!](https://www.youtube.com/watch?v=wGzmJ8AArv0)
+
 ---
 
 ## 🚀 Features
