@@ -33,6 +33,6 @@ jobs:
         run: |
           make db-init
           make build
-          .thd-project &          
+          ./bin/thd-project &          
           sleep 2                 # <-- Let's wait a little bit, just in case
           make integration
