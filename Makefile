@@ -21,7 +21,7 @@ build:
 
 .PHONY: test
 test:
-	go test -v -cover $(PKG)
+	go test -cover $(PKG)
 	$(call feedback,Test coverage complete)
 
 .PHONY: fmt
