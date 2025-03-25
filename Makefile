@@ -30,11 +30,20 @@ coverage:
 	go tool cover -html=coverage.out -o docs/coverage.html
 	$(call feedback,Coverage report generated at coverage.html)
 
+# Lint: basic formatting + vetting (fast, safe)
 .PHONY: lint
 lint:
 	go fmt $(PKG)
 	go vet $(PKG)
-	$(call feedback,Code linted and validated)
+	$(call feedback,Basic linting complete)
+
+# Lint-strict: includes staticcheck for deep analysis (slow, optional)
+.PHONY: lint-strict
+lint-strict:
+	go fmt $(PKG)
+	go vet $(PKG)
+	go run honnef.co/go/tools/cmd/staticcheck@latest ./...
+	$(call feedback,Code linted and validated strictly)
 
 .PHONY: check
 check: lint test
